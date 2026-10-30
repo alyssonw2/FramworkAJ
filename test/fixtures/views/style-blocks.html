@@ -1,0 +1,13 @@
+<style>
+  :root { --delay: {{ delay }}ms; }
+
+  {{#each items as item, index}}
+  ::view-transition-new({{ vtName('row', item.id) }}) {
+    animation-delay: {{ index * 25 }}ms;
+  }
+  {{/each}}
+
+  .unsafe-{{ injected }} { color: red; }
+</style>
+<p>ok</p>
+<script>const literal = "{{ notInterpolated }}";</script>

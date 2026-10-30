@@ -1,0 +1,12 @@
+<h1>{{ title }}</h1>
+
+<form method="POST" action="/items" f-submit="ajax" f-target="#list">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+  <label for="name">Nome</label>
+  <input id="name" name="name" value="{{ name }}">
+  <button type="submit">Salvar</button>
+</form>
+
+<ul id="list">
+  {{#each items as item}}<li>{{ item }}</li>{{/each}}
+</ul>

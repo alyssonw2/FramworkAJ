@@ -1,0 +1,2 @@
+{{! defaults: {"tone": "info", "duration": 4000, "class": ""} }}
+<div class="toast toast--{{ tone }}{{ class ? ' ' + class : '' }}" data-flash-toast="{{ duration }}" role="status">{{ slot }}</div>

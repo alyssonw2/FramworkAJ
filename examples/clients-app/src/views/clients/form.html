@@ -1,0 +1,32 @@
+{{> layouts/app title=title}}
+
+{{#content "body"}}
+<main class="mx-auto w-full max-w-xl flex-1 px-6 pb-12 pt-8">
+  <header class="mb-5 flex flex-wrap items-start justify-between gap-4">
+    <div>
+      <h1 class="page-title">{{ heading }}</h1>
+      <p class="m-0 mt-1 text-sm text-ink-500">Validação no servidor; o HTML funciona sem JavaScript.</p>
+    </div>
+    <a class="btn btn--ghost" href="/clients?back=1">Voltar</a>
+  </header>
+
+  {{#if formError}}
+    <div class="mb-4 rounded-lg border border-danger-200 bg-danger-50 px-4 py-3 text-sm text-danger-700" role="alert">
+      {{ formError }}
+    </div>
+  {{/if}}
+
+  <form class="surface-card p-6" method="POST" action="{{ actionUrl }}">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <ui:field name="name" label="Nome" required="{{ true }}" value="{{ form.name }}" error="{{ errors.name }}"></ui:field>
+    <ui:field name="email" label="E-mail" type="email" required="{{ true }}" value="{{ form.email }}" error="{{ errors.email }}"></ui:field>
+    <ui:field name="phone" label="Telefone" value="{{ form.phone }}" hint="Opcional, com DDD." error="{{ errors.phone }}"></ui:field>
+
+    <div class="mt-5 flex items-center gap-2">
+      <ui:button type="submit" variant="primary">Salvar</ui:button>
+      <a class="btn btn--ghost" href="/clients?back=1">Cancelar</a>
+    </div>
+  </form>
+</main>
+{{/content}}

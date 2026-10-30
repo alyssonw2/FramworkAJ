@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR" data-vt="blur">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · {{ appName }}</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="module" src="/__flash/client/runtime.js"></script>
+  <script type="module" src="/__flash/client/modules/modal.js"></script>
+  <script type="module" src="/__flash/client/modules/toast.js"></script>
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body class="flex min-h-screen flex-col">
+  <header class="flex items-center gap-6 bg-ink-900 px-6 py-3 text-slate-200" data-vt-persist>
+    <a class="flex items-baseline gap-1.5 font-extrabold tracking-tight text-white no-underline" href="/clients">
+      FLASH<span class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-slate-400">admin</span>
+    </a>
+
+    <nav class="flex-1" aria-label="Principal">
+      <a class="rounded-lg px-2 py-1.5 text-sm font-semibold no-underline transition-colors
+                {{ startsWith(currentPath, '/clients') ? 'bg-white/12 text-white' : 'text-slate-300 hover:text-white' }}"
+         href="/clients">Clientes</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      {{#if user}}
+        <span class="text-sm text-slate-300">{{ user.name }}</span>
+        <form method="POST" action="/logout">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+          <button class="btn btn--ghost btn--sm" type="submit">Sair</button>
+        </form>
+      {{else}}
+        <a class="btn btn--secondary btn--sm" href="/login">Entrar</a>
+      {{/if}}
+    </div>
+  </header>
+
+  {{ body }}
+
+  <footer class="mx-auto flex w-full max-w-5xl justify-between gap-4 px-6 py-6 text-xs text-ink-500">
+    <span>{{ appName }} — exemplo do framework FLASH</span>
+    <span>Node.js · ES Modules · Tailwind CSS</span>
+  </footer>
+</body>
+</html>

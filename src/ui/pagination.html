@@ -1,0 +1,6 @@
+{{! defaults: {"page": 1, "pages": 1, "prevUrl": "", "nextUrl": "", "label": "Paginação", "class": ""} }}
+<nav class="pagination{{ class ? ' ' + class : '' }}" aria-label="{{ label }}" {{ attrs }}>
+  {{#if prevUrl}}<a class="pagination__link" href="{{ prevUrl }}" rel="prev">← Anterior</a>{{/if}}
+  <span class="pagination__status">Página {{ page }} de {{ pages }}</span>
+  {{#if nextUrl}}<a class="pagination__link" href="{{ nextUrl }}" rel="next">Próxima →</a>{{/if}}
+</nav>

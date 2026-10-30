@@ -1,0 +1,49 @@
+{
+  "name": "flash",
+  "version": "0.1.0",
+  "description": "FLASH — Fast Lightweight Application Server-rendered HTML. HTML-first framework for data-driven applications.",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./express": "./src/adapters/express.js",
+    "./node": "./src/adapters/node.js",
+    "./session": "./src/adapters/session.js",
+    "./csrf": "./src/adapters/csrf.js",
+    "./security": "./src/adapters/security.js",
+    "./static": "./src/adapters/static.js",
+    "./rate-limit": "./src/adapters/rate-limit.js",
+    "./expressions": "./src/shared/expression.js",
+    "./escaping": "./src/shared/escaping.js",
+    "./ui/*": "./src/ui/*",
+    "./client/*": "./src/client/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "docs",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "test:watch": "node --test --watch test/*.test.js",
+    "example": "node examples/clients-app/src/app.js",
+    "check": "node --check src/index.js",
+    "docs": "node examples/docs-site/src/app.js",
+    "start": "node examples/clients-app/src/app.js",
+    "build:css": "npx @tailwindcss/cli -i examples/clients-app/src/styles/tailwind.css -o examples/clients-app/public/app.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i examples/clients-app/src/styles/tailwind.css -o examples/clients-app/public/app.css --watch"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

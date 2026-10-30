@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="/__flash/ui/flash.css">
+  <link rel="stylesheet" href="/assets/docs.css">
+  <script type="module" src="/__flash/client/runtime.js"></script>
+  <script type="module" src="/assets/docs.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <header class="site-header" data-vt-persist>
+    <button type="button" class="site-header__toggle" id="menu-toggle"
+            aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu">
+      <span aria-hidden="true">☰</span>
+    </button>
+
+    <a class="logo" href="/">
+      FLASH<span class="logo__tag">docs</span>
+    </a>
+
+    <div class="search" role="search">
+      <label class="visually-hidden" for="search-input">Buscar na documentação</label>
+      <input class="search__input" id="search-input" type="search" autocomplete="off"
+             placeholder="Buscar na documentação…" aria-describedby="search-hint">
+      <kbd class="search__kbd" aria-hidden="true">Ctrl K</kbd>
+      <span class="visually-hidden" id="search-hint">Digite para filtrar títulos e conteúdo</span>
+      <div class="search__results" id="search-results" role="listbox" hidden></div>
+    </div>
+
+    <nav class="site-header__links">
+      <a href="/docs/introducao">Guia</a>
+      <a href="/docs/api-referencia">API</a>
+      <a href="https://nodejs.org/docs/latest/api/" rel="noopener noreferrer" target="_blank">Node.js</a>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        <span aria-hidden="true">◐</span>
+      </button>
+    </nav>
+  </header>
+
+  {{ body }}
+</body>
+</html>

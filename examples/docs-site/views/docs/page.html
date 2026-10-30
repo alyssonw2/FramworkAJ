@@ -1,0 +1,47 @@
+{{> layouts/docs title=title description=description}}
+
+{{#content "body"}}
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    {{> docs/nav}}
+  </aside>
+
+  <main class="content" id="conteudo">
+    <article class="prose">
+      <nav class="breadcrumb" aria-label="Trilha">
+        <span>{{ doc.section }}</span>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{{ doc.title }}</span>
+      </nav>
+
+      {{ doc.html }}
+    </article>
+
+    <nav class="pager" aria-label="Navegação entre páginas">
+      {{#if prev}}
+        <a class="pager__link" href="/docs/{{ prev.slug }}">
+          <span class="pager__hint">← Anterior</span>
+          <strong>{{ prev.title }}</strong>
+        </a>
+      {{/if}}
+      {{#if next}}
+        <a class="pager__link pager__link--next" href="/docs/{{ next.slug }}">
+          <span class="pager__hint">Próxima →</span>
+          <strong>{{ next.title }}</strong>
+        </a>
+      {{/if}}
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="Nesta página">
+    <p class="toc__title">Nesta página</p>
+    <ul class="toc__list" id="toc">
+      {{#each toc as heading}}
+        <li class="toc__item toc__item--l{{ heading.level }}">
+          <a class="toc__link" href="#{{ heading.id }}">{{ heading.text }}</a>
+        </li>
+      {{/each}}
+    </ul>
+  </aside>
+</div>
+{{/content}}

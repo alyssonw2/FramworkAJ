@@ -1,0 +1,17 @@
+{{! defaults: {"type": "text", "required": false, "value": "", "error": "", "hint": "", "autocomplete": "off"} }}
+<div class="field{{ error ? ' field--invalid' : '' }}">
+  <label class="field__label" for="{{ name }}">{{ label }}{{#if required}}<span class="field__required" aria-hidden="true">*</span>{{/if}}</label>
+  <input
+    class="field__control"
+    id="{{ name }}"
+    name="{{ name }}"
+    type="{{ type }}"
+    value="{{ value }}"
+    autocomplete="{{ autocomplete }}"
+    required="{{ required }}"
+    aria-required="{{ bool(required) }}"
+    aria-invalid="{{ bool(error) }}"
+    {{ attrs }}>
+  {{#if hint}}<p class="field__hint">{{ hint }}</p>{{/if}}
+  {{#if error}}<p class="field__error" role="alert">{{ error }}</p>{{/if}}
+</div>

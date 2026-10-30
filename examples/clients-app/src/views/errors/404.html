@@ -1,0 +1,13 @@
+{{> layouts/app title="Página não encontrada"}}
+
+{{#content "body"}}
+<main class="mx-auto w-full max-w-xl flex-1 px-6 pb-12 pt-16">
+  <div class="surface-card p-8 text-center">
+    <p class="m-0 mb-2 text-5xl font-extrabold text-brand-600">404</p>
+    <h1 class="m-0 mb-2 text-xl font-bold">Página não encontrada</h1>
+    <p class="m-0 mb-2 text-sm text-ink-500">{{ message }}</p>
+    {{#if requestId}}<p class="m-0 mb-5 text-xs text-ink-500">ID da requisição: <code>{{ requestId }}</code></p>{{/if}}
+    <a class="btn btn--primary" href="/clients">Ir para clientes</a>
+  </div>
+</main>
+{{/content}}

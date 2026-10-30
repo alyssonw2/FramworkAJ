@@ -1,0 +1,22 @@
+<nav class="nav" aria-label="Documentação">
+  <a class="nav__home {{ currentPath === '/' ? 'is-active' : '' }}" href="/">Visão geral</a>
+
+  {{#each sections as section}}
+    <p class="nav__section">{{ section.name }}</p>
+    <ul class="nav__list">
+      {{#each section.docs as item}}
+        <li>
+          <a class="nav__link {{ item.slug === doc.slug ? 'is-active' : '' }}" href="/docs/{{ item.slug }}">
+            {{ item.title }}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  {{/each}}
+
+  <p class="nav__section">Exemplos</p>
+  <ul class="nav__list">
+    <li><a class="nav__link" href="/docs/guia-rapido">App de clientes (passo a passo)</a></li>
+    <li><a class="nav__link" href="/docs/api-referencia">Referência da API</a></li>
+  </ul>
+</nav>

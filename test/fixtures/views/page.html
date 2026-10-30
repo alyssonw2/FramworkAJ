@@ -1,0 +1,23 @@
+{{> layouts/base title=title}}
+
+{{#content "body"}}
+<main>
+  <h1>{{ title }}</h1>
+  {{#if user}}
+    <p class="greeting">Olá, {{ user.name }}.</p>
+  {{else}}
+    <a href="/login">Entrar</a>
+  {{/if}}
+
+  <ul class="clients">
+    {{#each clients as client, index}}
+      <li data-index="{{ index }}" class="{{ index === 0 ? 'first' : '' }}">{{ client.name }}</li>
+    {{else}}
+      <li class="empty">Nenhum</li>
+    {{/each}}
+  </ul>
+
+  {{> partials/footer year=year}}
+  <ui:card title="Total">{{ clients.length }}</ui:card>
+</main>
+{{/content}}

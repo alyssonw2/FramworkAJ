@@ -1,0 +1,33 @@
+{{> layouts/auth title="Entrar"}}
+
+{{#content "body"}}
+<main class="w-[min(92vw,24rem)] px-4 py-8">
+  <section class="surface-card p-8">
+    <a class="mb-5 flex items-baseline justify-center gap-1.5 font-extrabold tracking-tight text-ink-900 no-underline" href="/">
+      FLASH<span class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink-500">admin</span>
+    </a>
+
+    <h1 class="m-0 mb-1 text-xl font-bold">Entrar</h1>
+    <p class="m-0 mb-6 text-xs text-ink-500">
+      Demonstração: <code class="rounded bg-slate-100 px-1.5 py-0.5">admin@flash.dev</code> /
+      <code class="rounded bg-slate-100 px-1.5 py-0.5">admin123</code>
+    </p>
+
+    {{#if error}}
+      <div class="mb-4 rounded-lg border border-danger-200 bg-danger-50 px-4 py-3 text-sm text-danger-700" role="alert">
+        {{ error }}
+      </div>
+    {{/if}}
+
+    <form method="POST" action="/login">
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <input type="hidden" name="next" value="{{ next }}">
+
+      <ui:field name="email" label="E-mail" type="email" required="{{ true }}" value="{{ email }}" autocomplete="username"></ui:field>
+      <ui:field name="password" label="Senha" type="password" required="{{ true }}" autocomplete="current-password"></ui:field>
+
+      <ui:button type="submit" variant="primary" class="btn--block">Entrar</ui:button>
+    </form>
+  </section>
+</main>
+{{/content}}

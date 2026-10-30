@@ -1,0 +1,12 @@
+{
+  "name": "flash-example-clients",
+  "private": true,
+  "type": "module",
+  "description": "Example FLASH application (Tailwind CSS v4): client CRUD with search, pagination, partial updates and modals.",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js --dev",
+    "build:css": "npm run build:css --prefix ../..",
+    "watch:css": "npm run watch:css --prefix ../.."
+  }
+}

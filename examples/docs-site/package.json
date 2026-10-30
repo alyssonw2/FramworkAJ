@@ -1,0 +1,9 @@
+{
+  "name": "flash-docs-site",
+  "private": true,
+  "type": "module",
+  "description": "Documentation site for FLASH, built with FLASH.",
+  "scripts": {
+    "start": "node src/app.js"
+  }
+}

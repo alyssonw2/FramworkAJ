@@ -1,0 +1,40 @@
+{{> layouts/app title=title}}
+
+{{#content "body"}}
+<main class="mx-auto w-full max-w-5xl flex-1 px-6 pb-12 pt-8">
+  <header class="mb-5 flex flex-wrap items-start justify-between gap-4">
+    <div>
+      <h1 class="page-title">Clientes</h1>
+      <p class="m-0 mt-1 text-sm text-ink-500">
+        {{ total }} registro(s) — busca e paginação processadas no servidor
+      </p>
+    </div>
+    <a class="btn btn--primary" href="/clients/new">Novo cliente</a>
+  </header>
+
+  <form class="mb-4 flex flex-wrap items-center gap-2" method="GET" action="/clients"
+        f-submit="ajax" f-target="#results">
+    <label class="visually-hidden" for="q">Pesquisar clientes</label>
+    <input class="field-search min-w-48 flex-1" id="q" name="q" value="{{ search }}" type="search"
+           placeholder="Pesquisar por nome, e-mail ou telefone">
+    <ui:button type="submit" variant="secondary">Buscar</ui:button>
+    {{#if search}}<a class="btn btn--ghost" href="/clients">Limpar</a>{{/if}}
+  </form>
+
+  <section id="results" class="surface-card overflow-hidden" aria-live="polite">
+    {{> clients/list}}
+  </section>
+</main>
+
+<ui:modal id="client-modal" title="Detalhes do cliente">
+  <dl class="m-0 mb-5 grid grid-cols-[7rem_1fr] gap-x-4 gap-y-2">
+    <dt class="text-xs text-ink-500">Nome</dt><dd class="m-0 font-semibold" f-bind:textContent="selected.name"></dd>
+    <dt class="text-xs text-ink-500">E-mail</dt><dd class="m-0 font-semibold" f-bind:textContent="selected.email"></dd>
+    <dt class="text-xs text-ink-500">Telefone</dt><dd class="m-0 font-semibold" f-bind:textContent="selected.phone"></dd>
+    <dt class="text-xs text-ink-500">Status</dt><dd class="m-0 font-semibold" f-bind:textContent="selected.status"></dd>
+  </dl>
+  <p class="m-0 flex items-center gap-2">
+    <button type="button" class="btn btn--secondary" data-flash-close>Fechar</button>
+  </p>
+</ui:modal>
+{{/content}}

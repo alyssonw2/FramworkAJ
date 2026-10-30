@@ -1,0 +1,5 @@
+{{! defaults: {"title": "Sem título", "class": ""} }}
+<section class="card{{ class ? ' ' + class : '' }}" {{ attrs }}>
+  <h2 class="card__title">{{ title }}</h2>
+  <div class="card__body">{{ slot }}</div>
+</section>

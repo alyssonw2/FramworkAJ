@@ -1,0 +1,16 @@
+{{> layouts/app title="Erro"}}
+
+{{#content "body"}}
+<main class="mx-auto w-full max-w-xl flex-1 px-6 pb-12 pt-16">
+  <div class="surface-card p-8 text-center">
+    <p class="m-0 mb-2 text-5xl font-extrabold text-brand-600">{{ status }}</p>
+    <h1 class="m-0 mb-2 text-xl font-bold">Não foi possível concluir a operação</h1>
+    <p class="m-0 mb-2 text-sm text-ink-500">{{ message }}</p>
+    {{#if requestId}}<p class="m-0 mb-4 text-xs text-ink-500">ID da requisição: <code>{{ requestId }}</code></p>{{/if}}
+    {{#if stack}}
+      <pre class="mb-5 max-h-72 overflow-auto rounded-lg bg-ink-900 p-4 text-left text-xs text-slate-200">{{ stack }}</pre>
+    {{/if}}
+    <a class="btn btn--primary" href="/clients">Voltar</a>
+  </div>
+</main>
+{{/content}}

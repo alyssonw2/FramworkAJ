@@ -1,0 +1,83 @@
+{{> layouts/docs title=title description=description}}
+
+{{#content "body"}}
+<main class="home" id="conteudo">
+  <section class="hero">
+    <p class="hero__eyebrow">Framework HTML-first · v0.1</p>
+    <h1 class="hero__title">Escreva menos.<br>Entregue HTML.</h1>
+    <p class="hero__lead">
+      FLASH é um framework full-stack server-rendered para sistemas administrativos,
+      CRUDs, painéis e SaaS. O servidor entrega HTML pronto; o navegador recebe apenas
+      o JavaScript necessário para melhorar a interação.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="/docs/{{ firstSlug }}">Começar agora</a>
+      <a class="btn btn--secondary" href="/docs/guia-rapido">Guia rápido</a>
+    </div>
+    <ul class="hero__facts">
+      <li><strong>{{ total }}</strong> páginas de documentação</li>
+      <li><strong>0</strong> dependências no runtime do navegador</li>
+      <li><strong>sem</strong> <code>eval</code> em templates ou diretivas</li>
+    </ul>
+  </section>
+
+  <section class="features">
+    <article class="feature">
+      <h2>HTML primeiro</h2>
+      <p>Templates resolvidos 100% no servidor. A primeira resposta já é conteúdo utilizável — sem tela vazia esperando JavaScript.</p>
+    </article>
+    <article class="feature">
+      <h2>JavaScript sob demanda</h2>
+      <p>Um runtime pequeno, carregado só em páginas que usam diretivas. Formulários continuam funcionando sem ele.</p>
+    </article>
+    <article class="feature">
+      <h2>Seguro por padrão</h2>
+      <p>Escape contextual automático, linguagem de expressão restrita sem <code>eval</code>, CSRF integrado e CSP estrita.</p>
+    </article>
+    <article class="feature">
+      <h2>Servidor é a autoridade</h2>
+      <p>Permissões, validações e regras de negócio ficam no servidor. O cliente só apresenta resultados e estado transitório.</p>
+    </article>
+  </section>
+
+  <section class="quickstart">
+    <h2>Em 20 linhas</h2>
+    <div class="code-block">
+      <span class="code-label">app.js</span>
+<pre><code class="language-js">import express from 'express';
+import { createFlash } from 'flash';
+import { expressAdapter } from 'flash/express';
+
+const flash = createFlash({
+  views: './src/views',
+  components: './src/components'
+});
+
+flash.get('/clients', async (ctx) =&gt; {
+  const clients = await clientService.list({ search: ctx.query.q });
+
+  return ctx.render('clients/index', {
+    title: 'Clientes',
+    clients
+  });
+});
+
+app.use(expressAdapter(flash));</code></pre>
+    </div>
+    <p class="quickstart__more"><a href="/docs/guia-rapido">Continuar no guia rápido →</a></p>
+  </section>
+
+  <section class="index-grid">
+    {{#each sections as section}}
+      <div class="index-card">
+        <h3>{{ section.name }}</h3>
+        <ul>
+          {{#each section.docs as item}}
+            <li><a href="/docs/{{ item.slug }}">{{ item.title }}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/each}}
+  </section>
+</main>
+{{/content}}

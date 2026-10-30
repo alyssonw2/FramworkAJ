@@ -1,0 +1,59 @@
+{{#if toast}}
+  <ui:toast tone="{{ toast.tone }}">{{ toast.message }}</ui:toast>
+{{/if}}
+
+{{#if clients.items.length}}
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse text-sm">
+    <caption class="visually-hidden">Lista de clientes</caption>
+    <thead>
+      <tr class="bg-slate-50/80">
+        <th scope="col" class="border-b border-line px-4 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-[0.06em] text-ink-500">Cliente</th>
+        <th scope="col" class="border-b border-line px-4 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-[0.06em] text-ink-500">Telefone</th>
+        <th scope="col" class="border-b border-line px-4 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-[0.06em] text-ink-500">Status</th>
+        <th scope="col" class="border-b border-line px-4 py-3 text-right text-[0.7rem] font-semibold uppercase tracking-[0.06em] text-ink-500">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each clients.items as client}}
+      <tr class="border-b border-line last:border-0 hover:bg-slate-50/70">
+        <td class="px-4 py-3 align-middle">
+          <strong class="block">{{ client.name }}</strong>
+          <span class="block text-xs text-ink-500">{{ client.email }}</span>
+        </td>
+        <td class="px-4 py-3 align-middle">{{ default(client.phone, '—') }}</td>
+        <td class="px-4 py-3 align-middle">
+          <ui:badge tone="{{ client.status === 'active' ? 'success' : 'neutral' }}">{{ client.status === 'active' ? 'Ativo' : 'Inativo' }}</ui:badge>
+        </td>
+        <td class="px-4 py-3 align-middle">
+          <div class="flex items-center justify-end gap-1.5">
+            <button type="button" class="btn btn--ghost btn--sm"
+                    data-client-name="{{ client.name }}"
+                    data-client-email="{{ client.email }}"
+                    data-client-phone="{{ client.phone }}"
+                    data-client-status="{{ client.status }}"
+                    f-on:click="clients.show">Detalhes</button>
+            <a class="btn btn--secondary btn--sm" href="/clients/{{ client.id }}/edit">Editar</a>
+            <form method="POST" action="/clients/{{ client.id }}/delete"
+                  f-submit="ajax" f-target="#results"
+                  f-confirm="Excluir o cliente {{ client.name }}?">
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+              <button class="btn btn--danger btn--sm" type="submit">Excluir</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div class="px-4">
+  <ui:pagination page="{{ page }}" pages="{{ pages }}" prevUrl="{{ prevUrl }}" nextUrl="{{ nextUrl }}"></ui:pagination>
+</div>
+{{else}}
+<ui:empty-state title="Nenhum cliente encontrado"
+                description="{{ search ? 'Ajuste a busca e tente novamente.' : 'Cadastre o primeiro cliente para começar.' }}">
+  <a class="btn btn--primary mt-3" href="/clients/new">Novo cliente</a>
+</ui:empty-state>
+{{/if}}

@@ -1,0 +1,292 @@
+/*!
+ * FLASH — View Transitions
+ *
+ * Ativa transições entre páginas por padrão (`@view-transition`) e define um
+ * conjunto pequeno de variações selecionadas por `data-vt` no elemento <html>.
+ *
+ * --flash-vt-duration / --flash-vt-easing / --flash-vt-distance
+ *   ajustam todas as transições de uma vez.
+ *
+ * Em navegadores sem suporte a View Transitions nada muda: as páginas navegam
+ * e atualizam normalmente, sem animação.
+ */
+
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  --flash-vt-duration: 260ms;
+  --flash-vt-easing: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --flash-vt-distance: 10px;
+  /* Tempo do "sair" em relação ao "entrar": sair mais rápido dá direção. */
+  --flash-vt-out-scale: 0.7;
+}
+
+/* Duração/easing padrão para todo grupo de transição. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--flash-vt-duration);
+  animation-timing-function: var(--flash-vt-easing);
+  animation-fill-mode: both;
+}
+
+::view-transition {
+  perspective: 1400px;
+}
+
+/* ==========================================================================
+   1. Padrão — fade com elevação suave
+   ========================================================================== */
+
+@keyframes flash-vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes flash-vt-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--flash-vt-distance);
+  }
+}
+
+::view-transition-old(root) {
+  animation-name: flash-vt-fade-out;
+  animation-duration: calc(var(--flash-vt-duration) * var(--flash-vt-out-scale));
+}
+
+::view-transition-new(root) {
+  animation-name: flash-vt-rise-in;
+}
+
+/* ==========================================================================
+   2. Slide horizontal — avançar (conteúdo novo entra pela direita)
+   ========================================================================== */
+
+@keyframes flash-vt-out-left {
+  to {
+    opacity: 0.35;
+    translate: -18% 0;
+  }
+}
+
+@keyframes flash-vt-in-right {
+  from {
+    opacity: 0.35;
+    translate: 18% 0;
+  }
+}
+
+@keyframes flash-vt-out-right {
+  to {
+    opacity: 0.35;
+    translate: 18% 0;
+  }
+}
+
+@keyframes flash-vt-in-left {
+  from {
+    opacity: 0.35;
+    translate: -18% 0;
+  }
+}
+
+:root[data-vt="slide"]::view-transition-old(root) {
+  animation-name: flash-vt-out-left;
+}
+
+:root[data-vt="slide"]::view-transition-new(root) {
+  animation-name: flash-vt-in-right;
+}
+
+/* Voltar (botão do navegador ou link "voltar"). */
+:root[data-vt="slide-back"]::view-transition-old(root) {
+  animation-name: flash-vt-out-right;
+}
+
+:root[data-vt="slide-back"]::view-transition-new(root) {
+  animation-name: flash-vt-in-left;
+}
+
+/* ==========================================================================
+   3. Slide vertical — lista → detalhe
+   ========================================================================== */
+
+@keyframes flash-vt-out-down {
+  to {
+    opacity: 0.4;
+    translate: 0 6%;
+  }
+}
+
+@keyframes flash-vt-in-up {
+  from {
+    opacity: 0.4;
+    translate: 0 8%;
+  }
+}
+
+:root[data-vt="slide-up"]::view-transition-old(root) {
+  animation-name: flash-vt-out-down;
+}
+
+:root[data-vt="slide-up"]::view-transition-new(root) {
+  animation-name: flash-vt-in-up;
+}
+
+/* ==========================================================================
+   4. Zoom suave
+   ========================================================================== */
+
+@keyframes flash-vt-scale-out {
+  to {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+@keyframes flash-vt-scale-in {
+  from {
+    opacity: 0;
+    scale: 1.02;
+  }
+}
+
+:root[data-vt="scale"]::view-transition-old(root) {
+  animation-name: flash-vt-scale-out;
+}
+
+:root[data-vt="scale"]::view-transition-new(root) {
+  animation-name: flash-vt-scale-in;
+}
+
+/* ==========================================================================
+   5. Cortina — a página nova é revelada com clip-path
+   ========================================================================== */
+
+@keyframes flash-vt-curtain-out {
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes flash-vt-curtain-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+:root[data-vt="curtain"]::view-transition-old(root) {
+  animation-name: flash-vt-curtain-out;
+}
+
+:root[data-vt="curtain"]::view-transition-new(root) {
+  animation-name: flash-vt-curtain-in;
+  animation-duration: calc(var(--flash-vt-duration) * 1.4);
+  animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   6. Desfoque — troca de contexto (ex.: entrar em um detalhe)
+   ========================================================================== */
+
+@keyframes flash-vt-blur-out {
+  to {
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes flash-vt-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+:root[data-vt="blur"]::view-transition-old(root) {
+  animation-name: flash-vt-blur-out;
+}
+
+:root[data-vt="blur"]::view-transition-new(root) {
+  animation-name: flash-vt-blur-in;
+}
+
+/* ==========================================================================
+   7. Flip 3D
+   ========================================================================== */
+
+@keyframes flash-vt-flip-out {
+  to {
+    opacity: 0;
+    rotate: y 90deg;
+  }
+}
+
+@keyframes flash-vt-flip-in {
+  from {
+    opacity: 0;
+    rotate: y -90deg;
+  }
+}
+
+:root[data-vt="flip"]::view-transition-old(root) {
+  animation-name: flash-vt-flip-out;
+  transform-origin: center right;
+}
+
+:root[data-vt="flip"]::view-transition-new(root) {
+  animation-name: flash-vt-flip-in;
+  transform-origin: center left;
+}
+
+/* ==========================================================================
+   Desligar animação nesta navegação
+   ========================================================================== */
+
+:root[data-vt="none"]::view-transition-old(root),
+:root[data-vt="none"]::view-transition-new(root) {
+  animation: none;
+}
+
+/* ==========================================================================
+   Elementos persistentes
+   Um elemento com `view-transition-name` próprio não é afetado pelo root:
+   é isso que mantém header/sidebar estáveis durante a troca.
+   ========================================================================== */
+
+[data-vt-persist] {
+  view-transition-name: flash-persist;
+}
+
+::view-transition-group(flash-persist) {
+  animation: none;
+}
+
+::view-transition-old(flash-persist),
+::view-transition-new(flash-persist) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ==========================================================================
+   Acessibilidade e degradação
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  :root[data-vt="curtain"]::view-transition-new(root) {
+    clip-path: none;
+  }
+}

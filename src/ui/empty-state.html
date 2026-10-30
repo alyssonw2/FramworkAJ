@@ -1,0 +1,6 @@
+{{! defaults: {"title": "Nada por aqui", "description": "", "class": ""} }}
+<div class="empty-state{{ class ? ' ' + class : '' }}" {{ attrs }}>
+  <p class="empty-state__title">{{ title }}</p>
+  {{#if description}}<p class="empty-state__description">{{ description }}</p>{{/if}}
+  {{ slot }}
+</div>

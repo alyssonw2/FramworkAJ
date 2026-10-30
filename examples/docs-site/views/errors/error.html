@@ -1,0 +1,15 @@
+{{> layouts/docs title="Erro" description="Erro"}}
+
+{{#content "body"}}
+<main class="home" id="conteudo">
+  <section class="hero">
+    <p class="hero__eyebrow">{{ status }}</p>
+    <h1 class="hero__title">Não foi possível concluir a operação</h1>
+    <p class="hero__lead">{{ message }}</p>
+    <p class="hero__lead">ID da requisição: <code>{{ requestId }}</code></p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="/">Voltar ao início</a>
+    </div>
+  </section>
+</main>
+{{/content}}

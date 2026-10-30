@@ -1,0 +1,271 @@
+/*
+ * FLASH UI — optional base styles for the components in `src/ui`.
+ *
+ * Copy this file into your project (or link it from /__flash/ui/flash.css) and
+ * adapt the design tokens below. Nothing here is required by the framework.
+ */
+
+:root {
+  --flash-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --flash-bg: #f5f6f8;
+  --flash-surface: #ffffff;
+  --flash-border: #dfe3ea;
+  --flash-text: #14181f;
+  --flash-text-muted: #5b6473;
+  --flash-primary: #1f5eff;
+  --flash-primary-hover: #1a4fd6;
+  --flash-danger: #d2354a;
+  --flash-success: #1f8a52;
+  --flash-warning: #b3730b;
+  --flash-radius: 10px;
+  --flash-radius-sm: 6px;
+  --flash-shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 8px 24px -12px rgba(16, 24, 40, .18);
+  --flash-gap: .75rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: var(--flash-font);
+  color: var(--flash-text);
+  background: var(--flash-bg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--flash-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .55rem .95rem;
+  border: 1px solid transparent;
+  border-radius: var(--flash-radius-sm);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.btn:disabled,
+.btn[aria-busy="true"] { opacity: .6; cursor: progress; }
+
+.btn--primary { background: var(--flash-primary); color: #fff; }
+.btn--primary:hover:not(:disabled) { background: var(--flash-primary-hover); }
+
+.btn--secondary { background: var(--flash-surface); color: var(--flash-text); border-color: var(--flash-border); }
+.btn--secondary:hover:not(:disabled) { border-color: #c3cad6; }
+
+.btn--ghost { background: transparent; color: var(--flash-text-muted); }
+.btn--ghost:hover:not(:disabled) { color: var(--flash-text); }
+
+.btn--danger { background: var(--flash-danger); color: #fff; }
+
+.btn--sm { padding: .35rem .6rem; font-size: .85rem; }
+
+/* ---------- badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.6;
+  background: #eef1f6;
+  color: var(--flash-text-muted);
+}
+
+.badge--success { background: #e6f6ed; color: var(--flash-success); }
+.badge--danger { background: #fdecef; color: var(--flash-danger); }
+.badge--warning { background: #fdf3e3; color: var(--flash-warning); }
+.badge--info { background: #e9efff; color: var(--flash-primary); }
+
+/* ---------- form fields ---------- */
+
+.field { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+
+.field__label { font-weight: 600; font-size: .9rem; }
+
+.field__required { color: var(--flash-danger); margin-left: .2rem; }
+
+.field__control {
+  font: inherit;
+  padding: .55rem .7rem;
+  border: 1px solid var(--flash-border);
+  border-radius: var(--flash-radius-sm);
+  background: var(--flash-surface);
+}
+
+.field__control:focus { border-color: var(--flash-primary); outline: 2px solid rgba(31, 94, 255, .18); }
+
+.field--invalid .field__control { border-color: var(--flash-danger); }
+
+.field__hint { margin: 0; font-size: .82rem; color: var(--flash-text-muted); }
+
+.field__error { margin: 0; font-size: .82rem; font-weight: 600; color: var(--flash-danger); }
+
+/* ---------- empty state ---------- */
+
+.empty-state {
+  padding: 2rem 1rem;
+  text-align: center;
+  border: 1px dashed var(--flash-border);
+  border-radius: var(--flash-radius);
+  background: var(--flash-surface);
+}
+
+.empty-state__title { margin: 0 0 .25rem; font-weight: 600; }
+.empty-state__description { margin: 0; color: var(--flash-text-muted); font-size: .9rem; }
+
+/* ---------- pagination ---------- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--flash-gap);
+  justify-content: space-between;
+  padding: .75rem 0;
+  font-size: .9rem;
+}
+
+.pagination__link { color: var(--flash-primary); text-decoration: none; font-weight: 600; }
+.pagination__link:hover { text-decoration: underline; }
+.pagination__status { color: var(--flash-text-muted); }
+
+/* ---------- modal ---------- */
+
+body.flash-modal-open { overflow: hidden; }
+
+.modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; }
+
+.modal[hidden] { display: none; }
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 24, 40, .45);
+  backdrop-filter: blur(2px);
+}
+
+.modal__dialog {
+  position: relative;
+  width: min(92vw, 32rem);
+  max-height: 88vh;
+  overflow: auto;
+  background: var(--flash-surface);
+  border-radius: var(--flash-radius);
+  box-shadow: var(--flash-shadow);
+  animation: flash-modal-in .16s ease-out;
+}
+
+.modal__dialog--lg { width: min(94vw, 48rem); }
+.modal__dialog--sm { width: min(92vw, 24rem); }
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--flash-border);
+}
+
+.modal__title { margin: 0; font-size: 1.05rem; }
+
+.modal__close {
+  border: 0;
+  background: transparent;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--flash-text-muted);
+  cursor: pointer;
+  padding: .2rem .4rem;
+  border-radius: var(--flash-radius-sm);
+}
+
+.modal__close:hover { color: var(--flash-text); background: var(--flash-bg); }
+
+.modal__body { padding: 1.25rem; }
+
+@keyframes flash-modal-in {
+  from { opacity: 0; transform: translateY(6px) scale(.99); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- toasts ---------- */
+
+.toast-stack {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  max-width: min(92vw, 22rem);
+}
+
+.toast {
+  padding: .7rem .9rem;
+  border-radius: var(--flash-radius-sm);
+  background: #1b2230;
+  color: #fff;
+  font-size: .9rem;
+  box-shadow: var(--flash-shadow);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease;
+  cursor: pointer;
+}
+
+.toast.is-visible { opacity: 1; transform: none; }
+
+.toast--success { background: var(--flash-success); }
+.toast--danger { background: var(--flash-danger); }
+.toast--warning { background: var(--flash-warning); }
+
+/* ---------- spinner ---------- */
+
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner__dot {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: flash-spin .7s linear infinite;
+}
+
+@keyframes flash-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
