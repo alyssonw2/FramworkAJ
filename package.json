@@ -18,14 +18,17 @@
     "./security": "./src/adapters/security.js",
     "./static": "./src/adapters/static.js",
     "./rate-limit": "./src/adapters/rate-limit.js",
+    "./paths": "./src/paths.js",
     "./expressions": "./src/shared/expression.js",
     "./escaping": "./src/shared/escaping.js",
     "./ui/*": "./src/ui/*",
     "./client/*": "./src/client/*",
+    "./*": "./src/*",
     "./package.json": "./package.json"
   },
   "files": [
     "src",
+    "bin",
     "docs",
     "README.md"
   ],
@@ -37,7 +40,10 @@
     "docs": "node examples/docs-site/src/app.js",
     "start": "node examples/clients-app/src/app.js",
     "build:css": "npx @tailwindcss/cli -i examples/clients-app/src/styles/tailwind.css -o examples/clients-app/public/app.css --minify",
-    "watch:css": "npx @tailwindcss/cli -i examples/clients-app/src/styles/tailwind.css -o examples/clients-app/public/app.css --watch"
+    "watch:css": "npx @tailwindcss/cli -i examples/clients-app/src/styles/tailwind.css -o examples/clients-app/public/app.css --watch",
+    "flash_deploy": "node bin/flash-deploy.js",
+    "deploy:verify": "node bin/flash-deploy.js --no-css --no-bundle-deps",
+    "start:deploy": "node deploy/start.mjs"
   },
   "dependencies": {
     "express": "^5.1.0"
@@ -45,5 +51,8 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
     "tailwindcss": "^4.3.3"
+  },
+  "bin": {
+    "flash-deploy": "./bin/flash-deploy.js"
   }
 }

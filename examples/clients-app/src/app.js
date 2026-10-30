@@ -17,6 +17,9 @@ import { expressAdapter } from '../../../src/adapters/express.js';
 import { session } from '../../../src/adapters/session.js';
 import { csrf } from '../../../src/adapters/csrf.js';
 import { securityHeaders } from '../../../src/adapters/security.js';
+// Os caminhos dos componentes do framework vêm do pacote: funcionam rodando do
+// repositório e também de node_modules/flash depois do `flash_deploy`.
+import { componentsDir } from '../../../src/paths.js';
 
 import { registerAuthRoutes } from './routes/auth.routes.js';
 import { registerClientRoutes } from './routes/clients.routes.js';
@@ -24,7 +27,6 @@ import { findUserById } from './services/auth.service.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const FRAMEWORK_UI = path.resolve(HERE, '..', '..', '..', 'src', 'ui');
 
 // Flags: --dev (padrão) ativa o painel em /__flash/dev; --prod desliga o modo dev.
 const argv = new Set(process.argv.slice(2));
@@ -33,7 +35,7 @@ const dev = argv.has('--dev') || !isProduction;
 
 const flash = createFlash({
   views: path.join(HERE, 'views'),
-  components: [FRAMEWORK_UI, path.join(HERE, 'components')],
+  components: [componentsDir, path.join(HERE, 'components')],
   publicDir: path.join(ROOT, 'public'),
   publicPrefix: '/assets',
   dev,
@@ -55,6 +57,12 @@ const flash = createFlash({
     }
   }
 });
+
+// Em produção os assets recebem hash no nome (flash_deploy), então podem ser
+// cacheados por um ano sem revalidação.
+if (isProduction) {
+  flash.assets(path.join(ROOT, 'public'), { prefix: '/assets', immutable: true });
+}
 
 flash.use(securityHeaders({ hsts: isProduction && { maxAge: 15552000 } }));
 

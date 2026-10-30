@@ -19,6 +19,8 @@ um runtime pequeno e opcional adiciona interações locais.
   ativas sem escrever JavaScript.
 - **Painel de debug em dev** — requisições, rotas, templates, estado do cliente e
   overlay de erros (estilo Vite), ativado por `dev: true`.
+- **Deploy em um comando** — `flash_deploy` empacota app + framework + deps em
+  `deploy/`, com CSS compilado, assets com hash e manifesto verificável.
 
 ## Começando
 
@@ -28,6 +30,7 @@ npm test           # 139 testes: unidade, integração HTTP, runtime e devtools
 npm run example    # app de clientes completo → http://127.0.0.1:3000 (dev + painel de debug)
 npm run docs       # site de documentação     → http://127.0.0.1:4000
 npm run build:css  # recompila o CSS do exemplo (Tailwind CSS v4)
+npm run flash_deploy  # gera deploy/ pronto para o servidor
 ```
 
 Login do exemplo: `admin@flash.dev` / `admin123`.
@@ -102,6 +105,7 @@ npm run docs   # → http://127.0.0.1:4000
 | [Formulários e HTML parcial](docs/08-formularios-e-html-parcial.md) | contrato de atualização de regiões |
 | [Transições de página](docs/19-transicoes-de-pagina.md) | View Transitions por padrão + 10 exemplos prontos |
 | [Modo dev e devtools](docs/20-modo-dev-e-devtools.md) | painel de debug, endpoints e depuração do servidor |
+| [Deploy](docs/22-deploy.md) | `flash_deploy`: build autocontido, assets com hash e verificação |
 | [Rotas e contexto](docs/09-rotas-e-contexto.md) | router, middleware, `ctx`, respostas |
 | [Sessões e CSRF](docs/10-sessoes-e-csrf.md) | cookies assinados, rotação, tokens |
 | [Erros e depuração](docs/11-erros-e-depuracao.md) | diagnóstico com arquivo e linha |
@@ -123,6 +127,19 @@ A especificação original do produto está em
 | `examples/clients-app` | CRUD com autenticação, busca, paginação, formulários tradicionais, atualização parcial, modal e toast — estilizado com **Tailwind CSS v4** |
 | `examples/docs-site` | Markdown → HTML no servidor, layout com sidebar, busca no cliente, tema claro/escuro |
 
+## Deploy
+
+```bash
+npm run flash_deploy        # → deploy/  (autocontido, verificado em modo produção)
+cd deploy && node start.mjs
+```
+
+O comando analisa os templates, compila o Tailwind, reescreve os imports do
+framework para `flash/...`, vendoriza o framework (sem devtools), copia as
+dependências de produção, aplica hash nos assets, escreve
+`flash-manifest.json` e **sobe o build para confirmar** que ele responde.
+Detalhes em [Deploy](docs/22-deploy.md).
+
 ## Como o FLASH funciona
 
 ```text
@@ -138,6 +155,8 @@ Requisição → Router → Middleware (sessão, CSRF, autorização)
 | `src/shared` | linguagem de expressão e escaping (servidor **e** navegador) |
 | `src/client` | runtime do navegador e módulos de UI |
 | `src/adapters` | Express, `node:http`, sessão, CSRF, headers, rate limit, estáticos |
+| `src/dev` | painel de debug (só em desenvolvimento) |
+| `src/cli` | `flash_deploy` (build de produção) |
 | `src/ui` | componentes server-side e CSS opcional |
 
 ## Sintaxe em resumo
