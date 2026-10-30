@@ -40,6 +40,17 @@ node examples/clients-app/src/app.js --prod   # produção, sem devtools
 Ao abrir qualquer página em dev, um badge **FLASH** aparece no canto inferior
 direito. Clique nele — ou use `Alt+Shift+D` — para abrir o painel.
 
+### Abrir e fechar
+
+| Ação | Como |
+| --- | --- |
+| Abrir / alternar | clique no badge **FLASH** ou `Alt+Shift+D` |
+| Fechar | botão **✕** no cabeçalho, `Esc`, clique fora do painel, ou `Alt+Shift+D` |
+| Abrir/fechar por código | `window.flashDevtools.open()`, `.close()`, `.toggle()` |
+
+O painel aberto é lembrado por aba (`localStorage`), então ele volta aberto ao
+navegar entre páginas — feche com `Esc` ou ✕ quando quiser a tela limpa.
+
 | Aba | Mostra |
 | --- | --- |
 | **Requisições** | método, caminho, status, duração, tamanho, `requestId`, se foi fragmento e a transição usada; campo de filtro |
@@ -53,6 +64,7 @@ O painel:
 - vive em **Shadow DOM** — nenhum estilo da página entra nele, e vice-versa;
 - atualiza sozinho a cada 2,5 s enquanto está aberto e a aba está visível;
 - guarda a posição aberta/fechada por aba no `localStorage`;
+- fecha com `Esc`, com o botão ✕ ou com um clique fora do painel;
 - respeita `prefers-reduced-motion`;
 - expõe `window.flashDevtools` (`open()`, `close()`, `toggle()`, `refresh()`,
   `snapshot`).

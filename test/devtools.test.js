@@ -201,6 +201,30 @@ test('panel.js é servido como módulo JavaScript', async () => {
   assert.match(String(response.body), /attachShadow/);
 });
 
+test('o painel fecha: [hidden] vence display:flex no CSS do painel', async () => {
+  const flash = app();
+  const response = await request(flash, { path: DEVTOOLS_PANEL });
+  const source = String(response.body);
+
+  // Regressão: `.panel { display: flex }` sobrepunha o atributo `hidden`, então o
+  // botão de fechar (e o Esc) não escondiam o painel.
+  assert.match(source, /\.panel\[hidden\]/);
+  assert.match(source, /\.badge__count\[hidden\]/);
+  assert.match(source, /display:\s*none\s*!important/);
+
+  // O painel é controlado pelo atributo `hidden`, não por classe.
+  assert.match(source, /panelEl\.hidden = !ui\.open/);
+});
+
+test('o painel fecha ao clicar fora e com Esc', async () => {
+  const flash = app();
+  const source = String((await request(flash, { path: DEVTOOLS_PANEL })).body);
+
+  assert.match(source, /event\.target === host/, 'faltou o clique-fora');
+  assert.match(source, /event\.key === 'Escape'/, 'faltou o Esc');
+  assert.match(source, /setOpen\(false\)/);
+});
+
 test('o painel não é servido fora do modo dev', async () => {
   const flash = app({ dev: false });
   const response = await request(flash, { path: DEVTOOLS_PANEL });

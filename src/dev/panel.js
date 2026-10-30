@@ -257,6 +257,13 @@ const STYLES = `
   }
   .dot--offline { background: #ff6b6b; box-shadow: 0 0 0 3px rgba(255, 107, 107, .18); }
 
+  /* O atributo hidden so vence display:flex/inline-flex com regra explicita. */
+  .panel[hidden],
+  .badge__count[hidden],
+  .overlay[hidden] {
+    display: none !important;
+  }
+
   .badge__count {
     min-width: 18px;
     height: 18px;
@@ -1061,6 +1068,19 @@ function matchesShortcut(event) {
     return event.key.toLowerCase() === part;
   });
 }
+
+// Clique fora do painel fecha (o alvo de eventos dentro do shadow é o host,
+// então basta comparar com o elemento host).
+document.addEventListener(
+  'click',
+  (event) => {
+    if (!ui.open || overlayEl) return;
+    const host = document.getElementById('flash-devtools');
+    if (event.target === host) return;
+    setOpen(false);
+  },
+  true
+);
 
 document.addEventListener(
   'keydown',
