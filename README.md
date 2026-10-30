@@ -97,6 +97,7 @@ npm run docs   # → http://127.0.0.1:4000
 | [Estrutura do projeto](docs/04-estrutura-do-projeto.md) | camadas e organização |
 | [Templates](docs/05-templates.md) | interpolação, blocos, layouts, include, atributos |
 | [Componentes](docs/06-componentes.md) | props, defaults, slots, `{{ attrs }}` |
+| [Estilos e Tailwind CSS](docs/21-estilos-e-tailwind.md) | Tailwind v4, tokens, componentes e build |
 | [Diretivas client-side](docs/07-diretivas-client.md) | `f-on`, `f-show`, `f-model`, ações e estado |
 | [Formulários e HTML parcial](docs/08-formularios-e-html-parcial.md) | contrato de atualização de regiões |
 | [Transições de página](docs/19-transicoes-de-pagina.md) | View Transitions por padrão + 10 exemplos prontos |
