@@ -151,7 +151,7 @@ O passo `smoke` não é decorativo. Ele sobe o build e confirma:
 
 | Checagem | Espera |
 | --- | --- |
-| raiz responde | status &lt; 500 |
+| raiz responde | status abaixo de 500 |
 | devtools desligado | `404` em `/__flash/dev/stats.json` |
 | asset com hash | `200` no arquivo renomeado |
 | sem painel no HTML | nenhum `<script>` de `__flash/dev` |

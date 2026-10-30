@@ -178,14 +178,27 @@ async function main() {
   const { manifest } = result;
 
   console.log(color('90', '  ─────────────────────────────────────────────'));
-  console.log(`  ${color('32', 'pronto')}  ${color('1', relative(result.outDir))}  ${color('90', `(${elapsed}s)`)}`);
+  if (result.dryRun) {
+    console.log(`  ${color('33', 'dry-run')}  ${color('1', relative(result.outDir))}  ${color('90', 'nada foi escrito')}`);
+  } else {
+    console.log(`  ${color('32', 'pronto')}  ${color('1', relative(result.outDir))}  ${color('90', `(${elapsed}s)`)}`);
+  }
+
   console.log('');
   console.log(`  views         ${manifest.analysis.views}`);
   console.log(`  componentes   ${manifest.analysis.components}`);
   console.log(`  diretivas     ${manifest.analysis.directives.join(', ') || '—'}`);
+
+  if (result.dryRun) {
+    console.log('');
+    return;
+  }
+
   console.log(`  arquivos      ${manifest.totals.files}`);
   console.log(`  tamanho       ${(manifest.totals.bytes / 1024).toFixed(0)} kB`);
-  console.log(`  assets        ${Object.values(manifest.assets).length ? Object.values(manifest.assets).join(', ') : '—'}`);
+  console.log(
+    `  assets        ${Object.values(manifest.assets).length ? Object.values(manifest.assets).join(', ') : '—'}`
+  );
 
   if (result.smoke?.checks?.length) {
     console.log('');
